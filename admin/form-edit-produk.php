@@ -4,13 +4,19 @@
     include('session.php');
   }
   $nama = ( isset($_SESSION['login_admin']) ) ? $_SESSION['login_admin'] : '';
+
+  include 'koneksi.php';
+  $id = $_GET['id_produk'];
+  $query = "SELECT * FROM produk WHERE id_produk='$id'";
+  $hasil = mysqli_query($connection,$query);
+  $row = mysqli_fetch_assoc($hasil);
  ?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sistem Penjualan Ikan | Produk</title>
+  <title>Tambah Produk</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -93,6 +99,8 @@
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
+
+  <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -140,112 +148,68 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Produk
-        <small>Manage Your Product</small>
+        Dashboard
+        <small>Tambah Produk lainnya</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="dashboard.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Data Produk</li>
+        <li class="active">Tambah Produk</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title"> <a href="tambah-produk.php" class="btn btn-primary"><i class="fa fa-plus"></i>Tambah Produk</a> </h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th><center>Nama Produk</center></th>
-                  <th><center>Jenis Produk</center></th>
-                  <th><center>Jumlah Produk</center></th>
-                  <th><center>Harga Produk</center></th>
-                  <th><center>Gambar</center></th>
-                  <th><center>Opsi</center></th>
-                </tr>
-                </thead>
-                <tbody>
-                  <?php
-                  include 'koneksi.php';
-                  $query = mysqli_query($connection, "SELECT * FROM produk");
-                  while($row = mysqli_fetch_assoc($query)){
-                    $image = $row['file'];
-                    ?>
-                      <tr>
-                        <td><center><?php echo $row['nama_produk']; ?></center></td>
-                        <td><center> <?php echo $row['jenis_produk']; ?> </center></td>
-                        <td><center><?php echo $row['jumlah_produk']; ?></center></td>
-                        <td><center>Rp. <?php echo $row['harga_produk']; ?></center></td>
-                        <td><center><img src="images/<?php echo "$image"; ?>" style="height: 75px; width: 75px"></center></td>
-                        <td><center>
-                          <a href="form-edit-produk.php?id_produk=<?php echo "$row[id_produk]"; ?>"><i class="fa fa-edit"></i></a>
-                          <a href="hapus-produk.php?id_produk=<?php echo "$row[id_produk]"; ?>" onclick="return confirm ('Yakin Ingin Hapus Data Ini ?')"><i class="fa fa-trash"></i></a>
-                        </center></td>
-                      </tr>
-                      <?php
-                      }
-                  ?>
-                </tfoot>
-              </table>
-            </div>
-            <!-- /.box-body -->
+        <div class="box box-default">
+          <div class="box-header with-border">
+            <h3 class="box-title">Nama Produk : <?php echo $row['nama_produk']; ?></h3>
           </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-      </div>
+            <form action="proses-edit-produk.php" method="post">
+              <div class="box-body">
+                <input type="hidden" name="id_produk" value="<?php echo $row['id_produk']; ?>">
+                <div class="form-group">
+                  <label>Nama Produk</label>
+                  <input type="text" class="form-control" name="nama_produk" value="<?php echo $row['nama_produk']; ?>">
+                </div>
+                <div class="form-group">
+                  <label>Jenis Produk</label>
+                  <select class="form-control" name="jenis_produk" value="<?php echo $row['jenis_produk']; ?>">
+                    <option value="Pil">Pilih Jenis Produk</option>
+                    <option value="ikan" <?= ($row['jenis_produk'] == 'ikan') ? 'selected' : '' ; ?>>Ikan</option>
+                    <option value="makanan" <?= ($row['jenis_produk'] == 'makanan') ? 'selected' : '' ; ?>>Makanan Ikan</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Jumlah Produk</label>
+                  <input type="number" class="form-control" name="jumlah_produk" value="<?php echo $row['jumlah_produk']; ?>">
+                </div>
+                <div class="form-group">
+                  <label>Harga Produk</label>
+                  <input type="number" class="form-control" name="harga_produk" value="<?php echo $row['harga_produk']; ?>">
+                </div>
+                <button type="button" class="btn btn-default" name="button" onclick="window.location='produk.php.php'">Kembali</button>
+                <input type="submit" value="Simpan" class="btn btn-primary"  onclick="return confirm ('Yakin simpan perubahan ?')">
+              </div>
+            </form>
+          </div>
       <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <strong>Copyright &copy; 2018 <a href="#">PT. Ikan Jaya Makmur Abadi</a>.</strong> All rights
     reserved.
   </footer>
-
-  <!-- Control Sidebar -->
-
 </div>
-<!-- ./wrapper -->
-
-<!-- jQuery 3 -->
 <script src="../style/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
 <script src="../style/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- DataTables -->
 <script src="../style/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../style/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<!-- SlimScroll -->
 <script src="../style/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
 <script src="../style/bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
 <script src="../style/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
 <script src="../style/dist/js/demo.js"></script>
-<!-- page script -->
-<script>
-  $(function () {
-    $('#example1').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    })
-  })
-</script>
 </body>
 </html>

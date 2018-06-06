@@ -10,7 +10,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sistem Penjualan Ikan | Produk</title>
+  <title>Tambah Produk</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -93,6 +93,8 @@
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
+
+  <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -140,112 +142,56 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Produk
-        <small>Manage Your Product</small>
+        Dashboard
+        <small>Tambah Produk lainnya</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="dashboard.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Data Produk</li>
+        <li class="active">Tambah Produk</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title"> <a href="tambah-produk.php" class="btn btn-primary"><i class="fa fa-plus"></i>Tambah Produk</a> </h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th><center>Nama Produk</center></th>
-                  <th><center>Jenis Produk</center></th>
-                  <th><center>Jumlah Produk</center></th>
-                  <th><center>Harga Produk</center></th>
-                  <th><center>Gambar</center></th>
-                  <th><center>Opsi</center></th>
-                </tr>
-                </thead>
-                <tbody>
-                  <?php
-                  include 'koneksi.php';
-                  $query = mysqli_query($connection, "SELECT * FROM produk");
-                  while($row = mysqli_fetch_assoc($query)){
-                    $image = $row['file'];
-                    ?>
-                      <tr>
-                        <td><center><?php echo $row['nama_produk']; ?></center></td>
-                        <td><center> <?php echo $row['jenis_produk']; ?> </center></td>
-                        <td><center><?php echo $row['jumlah_produk']; ?></center></td>
-                        <td><center>Rp. <?php echo $row['harga_produk']; ?></center></td>
-                        <td><center><img src="images/<?php echo "$image"; ?>" style="height: 75px; width: 75px"></center></td>
-                        <td><center>
-                          <a href="form-edit-produk.php?id_produk=<?php echo "$row[id_produk]"; ?>"><i class="fa fa-edit"></i></a>
-                          <a href="hapus-produk.php?id_produk=<?php echo "$row[id_produk]"; ?>" onclick="return confirm ('Yakin Ingin Hapus Data Ini ?')"><i class="fa fa-trash"></i></a>
-                        </center></td>
-                      </tr>
-                      <?php
-                      }
-                  ?>
-                </tfoot>
-              </table>
-            </div>
-            <!-- /.box-body -->
+        <div class="box box-default">
+          <?php
+            include "koneksi.php";
+            $query = "SELECT * FROM produk";
+            $tampil = $connection->query($query);
+            $sql = "DELETE FROM produk WHERE id_produk = ('$_GET[id_produk]')";
+            $data = $connection->query($sql);
+
+            if(mysqli_query($connection, $sql)){
+              echo "<div class='alert alert-success alert-dismissible'>
+                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                <h4><i class='icon fa fa-check'></i> Berhasil Hapus Produk!</h4>
+                <a href='produk.php'>Klik disini</a><b> untuk melihat produk lainnya</b>
+              </div>";
+            }else{
+              echo "Data Gagal Dihapus!".mysqli_error($connection);
+            }
+            mysqli_close($connection);
+          ?>
           </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-      </div>
       <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <strong>Copyright &copy; 2018 <a href="#">PT. Ikan Jaya Makmur Abadi</a>.</strong> All rights
     reserved.
   </footer>
-
-  <!-- Control Sidebar -->
-
 </div>
-<!-- ./wrapper -->
-
-<!-- jQuery 3 -->
 <script src="../style/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
 <script src="../style/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- DataTables -->
 <script src="../style/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../style/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<!-- SlimScroll -->
 <script src="../style/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
 <script src="../style/bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
 <script src="../style/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
 <script src="../style/dist/js/demo.js"></script>
-<!-- page script -->
-<script>
-  $(function () {
-    $('#example1').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    })
-  })
-</script>
 </body>
 </html>
