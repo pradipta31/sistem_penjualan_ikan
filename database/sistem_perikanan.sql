@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 05, 2018 at 04:27 PM
+-- Generation Time: Jun 06, 2018 at 04:15 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.12
 
@@ -75,10 +75,22 @@ INSERT INTO `anggota` (`id_anggota`, `nama`, `alamat`, `no_hp`, `email`, `passwo
 
 CREATE TABLE `produk` (
   `id_produk` int(11) NOT NULL,
-  `jenis_produk` int(11) NOT NULL,
+  `nama_produk` varchar(299) NOT NULL,
+  `jenis_produk` varchar(200) NOT NULL,
   `jumlah_produk` varchar(200) NOT NULL,
-  `harga_produk` varchar(200) NOT NULL
+  `harga_produk` varchar(200) NOT NULL,
+  `file` varchar(299) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `produk`
+--
+
+INSERT INTO `produk` (`id_produk`, `nama_produk`, `jenis_produk`, `jumlah_produk`, `harga_produk`, `file`) VALUES
+(11, 'Ikan Arwana Merah', 'ikan', '1', '250000', 'ikan-arwana.jpg'),
+(13, 'Ikan Hias Air Tawar', 'ikan', '1', '285000', 'ikan-hias-air-tawar-tercantik-di-dunia-killfish-redbubblenet.jpg'),
+(14, 'Ikan Lohan', 'ikan', '2', '1000000', 'maxresdefault.jpg'),
+(15, 'Ikan Mas Koki', 'ikan', '1', '500000', 'maxresdefault (1).jpg');
 
 -- --------------------------------------------------------
 
@@ -140,7 +152,7 @@ ALTER TABLE `anggota`
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `transaksi`
