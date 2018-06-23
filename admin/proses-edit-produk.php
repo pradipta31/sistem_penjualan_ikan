@@ -156,21 +156,43 @@
         <div class="box box-default">
               <?php
                 include 'koneksi.php';
+                $file = '';
+                $file_tmp = '';
+                $ekstensi_diperbolehkan	= array('png','jpg');
                 $id = $_POST['id_produk'];
                 $nama_produk = $_POST['nama_produk'];
                 $jenis_produk = $_POST['jenis_produk'];
                 $jumlah_produk = $_POST['jumlah_produk'];
                 $harga_produk = $_POST['harga_produk'];
 
-                $query = mysqli_query($connection,"UPDATE produk SET nama_produk = '$nama_produk', jenis_produk = '$jenis_produk',
-                jumlah_produk='$jumlah_produk', harga_produk='$harga_produk' WHERE id_produk = '$id'");
+                $file = $_FILES['file']['name'];
 
-                  echo "<div class='alert alert-success alert-dismissible'>
-                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-                    <h4><i class='icon fa fa-check'></i> Berhasil Update Produk!</h4>
-                    <a href='produk.php'>Klik disini</a><b> untuk melihat produk</b>
-                  </div>";
-                  mysqli_close($connection);
+                $x = explode('.', $file);
+                $ekstensi = strtolower(end($x));
+                $ukuran	= $_FILES['file']['size'];
+                $file_tmp = $_FILES['file']['tmp_name'];
+
+                if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
+                  if($ukuran < 1044070){
+                    move_uploaded_file($file_tmp, 'images/'.$file);
+                    $query = mysqli_query($connection,"UPDATE produk SET nama_produk = '$nama_produk', jenis_produk = '$jenis_produk',
+                    jumlah_produk='$jumlah_produk', harga_produk='$harga_produk', file='$file' WHERE id_produk = '$id'");
+                    if ($query) {
+                      echo "<div class='alert alert-success alert-dismissible'>
+                        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                        <h4><i class='icon fa fa-check'></i> Berhasil Update Produk!</h4>
+                        <a href='produk.php'>Klik disini</a><b> untuk melihat produk</b>
+                      </div>";
+                      mysqli_close($connection);
+                    }else {
+                      echo 'GAGAL MENGUPLOAD GAMBAR';
+                    }
+                  }else {
+                    echo 'UKURAN FILE TERLALU BESAR';
+                  }
+                }else {
+                  echo 'EKSTENSI FILE YANG DI UPLOAD TIDAK DI PERBOLEHKAN';
+                }
               ?>
           </div>
       <!-- /.row -->
