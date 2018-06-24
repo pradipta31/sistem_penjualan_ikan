@@ -13,7 +13,7 @@
     <meta name="googlebot" content="index,follow,snippet,archive">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Sistem Penjualan Ikan | Home</title>
+    <title>Sistem Penjualan Ikan | Produk</title>
 
     <meta name="keywords" content="">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
@@ -32,12 +32,44 @@
     <div class="nav-wrapper nav-font">
       <a href="home.php" class="brand-logo" style="margin-left: 20px"><img src="images/logo.png" style="height:90px;"></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 80px">
-        <li class="active"><a href="sass.html" style="text-decoration: none; font-size:20px; color:rgb(52, 52, 52)">Home</a></li>
-        <li><a href="produk.php" style="text-decoration: none; font-size:20px; color:rgb(52, 52, 52)">Produk</a></li>
+        <li><a href="sass.html" style="text-decoration: none; font-size:20px; color:rgb(52, 52, 52)">Home</a></li>
+        <li class="active"><a href="produk.php" style="text-decoration: none; font-size:20px; color:rgb(52, 52, 52)">Produk</a></li>
         <li><a href="logout.php" style="text-decoration: none;font-size:20px; color:rgb(52, 52, 52)" onclick="return confirm('yakin ingin logout?')">Logout</a></li>
       </ul>
     </div>
   </nav>
+  <div class="gallery" id="gallery">
+		<div class="container">
+			<div class="w3l-heading">
+				<h3>PRODUK Pt. IKan Predator</h3>
+				<div class="w3ls-border"> </div>
+			</div>
+		</div>
+		<br>
+		<!-- Default Thumbnails -->
+		<div class="container">
+			<div class="row">
+				<?php
+				include 'koneksi.php';
+        $query = "SELECT * FROM produk";
+        $hasil = mysqli_query($connection, $query);
+        while ($row = mysqli_fetch_array($hasil)) {
+
+					?>
+
+					<div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
+            <div class="card" style="height: 300px;">
+              <img class="card-img-top" src="./admin/images/<?=$row['file'];?>" alt="Card image cap" height="200px" width="263px">
+              <div class="card-body">
+                <h5 class="card-title"><center><?= $row['nama_produk'];?></center></h5>
+                <a href="pembelian.php?id_produk=<?php echo "$row[id_produk]"; ?>" class="btn btn-primary" style="margin-left: 100px">Beli</a>
+              </div>
+            </div>
+				</div> <!-- col-6 / end -->
+				<?php } ?>
+			</div>
+		</div>
+	</div>
   <div class="footer">
     <p style="font-size:12px;">2018. @TeamLabs.id</p>
   </div>

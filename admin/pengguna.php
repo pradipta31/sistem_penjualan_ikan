@@ -168,7 +168,7 @@
                 </thead>
                 <?php
                   $koneksi = mysqli_connect('localhost','root','','sistem_perikanan');
-                  $query = mysqli_query($koneksi, "SELECT * FROM pengguna");
+                  $query = mysqli_query($koneksi, "SELECT * FROM anggota");
                   while ($row = mysqli_fetch_assoc($query)) {
 
                 ?>
