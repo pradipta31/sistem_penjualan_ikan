@@ -100,7 +100,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="active treeview">
+        <li>
           <a href="dashboard.php">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             <span class="pull-right-container">
@@ -168,18 +168,18 @@
                 </thead>
                 <?php
                   $koneksi = mysqli_connect('localhost','root','','sistem_perikanan');
-                  $query = mysqli_query($koneksi, "SELECT * FROM anggota");
-                  while ($row = mysqli_fetch_assoc($query)) {
+                  $query = mysqli_query($koneksi, "SELECT * FROM anggota"); // execute query
+                  while ($row = mysqli_fetch_assoc($query)) { // menampilkan index $row
 
                 ?>
                 <tbody>
 
                       <tr>
 
-                        <td><center><?php echo $row['nama']; ?></center></td>
-                        <td><center> <?php echo $row['alamat']; ?> </center></td>
-                        <td><center><?php echo $row['no_hp']; ?></center></td>
-                        <td><center><?php echo $row['email']; ?></center></td>
+                        <td><center><?php echo $row['nama']; // menampilkan nama ?></center></td>
+                        <td><center> <?php echo $row['alamat']; // menampilkan alamat ?> </center></td>
+                        <td><center><?php echo $row['no_hp']; // menampilkan no_hp ?></center></td>
+                        <td><center><?php echo $row['email']; // menampilkan email ?></center></td>
                         <td><center>
                           <a href="form-edit-pengguna.php?id_pengguna=<?php echo "$row[id_pengguna]"; ?>"><i class="fa fa-edit"></i></a>
                           <a href="hapus-pengguna.php?id_pengguna=<?php echo "$row[id_pengguna]"; ?>" onclick="return confirm ('Yakin Ingin Hapus Data Ini ?')"><i class="fa fa-trash"></i></a>

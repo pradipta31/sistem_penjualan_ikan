@@ -102,7 +102,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="active treeview">
+        <li>
           <a href="dashboard.php">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             <span class="pull-right-container">
@@ -157,25 +157,25 @@
             <form action="" method="post">
               <?php
                 include 'koneksi.php';
-                $file = '';
-                $file_tmp = '';
-                if($_POST['submit']){
-          			$ekstensi_diperbolehkan	= array('png','jpg');
-                $nama_produk = $_POST['nama_produk'];
-                $jenis_produk = $_POST['jenis_produk'];
-                $jumlah_produk = $_POST['jumlah_produk'];
-                $harga_produk = $_POST['harga_produk'];
+                $file = ''; // sett variabel file menjadi null
+                $file_tmp = ''; // sett variabel file_tmp menjadi null
+                if($_POST['submit']){ // mengambil name submit
+          			$ekstensi_diperbolehkan	= array('png','jpg'); // sett variabel menjadi array dan ekstensi menjadi png dan jpg
+                $nama_produk = $_POST['nama_produk']; // mengambil nama produk
+                $jenis_produk = $_POST['jenis_produk']; // mengambil jenis produk
+                $jumlah_produk = $_POST['jumlah_produk']; // mengambil jumlah produk
+                $harga_produk = $_POST['harga_produk']; // mengambil harga produk
 
-          			$file = $_FILES['file']['name'];
+          			$file = $_FILES['file']['name']; // mengambil file gambar berdasarkan
 
-          			$x = explode('.', $file);
-          			$ekstensi = strtolower(end($x));
-          			$ukuran	= $_FILES['file']['size'];
-          			$file_tmp = $_FILES['file']['tmp_name'];
+          			$x = explode('.', $file); // pecah file
+          			$ekstensi = strtolower(end($x)); // variabel ekstensi set string menjadi lower dan terakhir
+          			$ukuran	= $_FILES['file']['size']; // sett ukuran
+          			$file_tmp = $_FILES['file']['tmp_name']; // set temporary
 
           			if(in_array($ekstensi, $ekstensi_diperbolehkan) === true){
           				if($ukuran < 1044070){
-          					move_uploaded_file($file_tmp, 'images/'.$file);
+          					move_uploaded_file($file_tmp, 'images/'.$file); // memindahkan file gambar ke folder images
           					$query = mysqli_query($connection,"INSERT INTO produk (nama_produk,jenis_produk,jumlah_produk,harga_produk,file)
                     VALUES ('$nama_produk','$jenis_produk','$jumlah_produk','$harga_produk','$file')");
           					if($query){

@@ -2,7 +2,7 @@
   include ('login.php'); // Memasukkan Skrip login
   if(isset($_SESSION['login_admin'])){
     header("location: dashboard.php");
-  }
+  } // mengecek apakah session adalah login admin
  ?>
 <!DOCTYPE html>
 <html>

@@ -157,9 +157,9 @@
           <?php
             include "koneksi.php";
             $query = "SELECT * FROM produk";
-            $tampil = $connection->query($query);
+            $tampil = $connection->query($query); // execute query
             $sql = "DELETE FROM produk WHERE id_produk = ('$_GET[id_produk]')";
-            $data = $connection->query($sql);
+            $data = $connection->query($sql); // execute query
 
             if(mysqli_query($connection, $sql)){
               echo "<div class='alert alert-success alert-dismissible'>

@@ -100,7 +100,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="active treeview">
+        <li>
           <a href="dashboard.php">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             <span class="pull-right-container">
@@ -174,15 +174,15 @@
                   <?php
                   include 'koneksi.php';
                   $query = mysqli_query($connection, "SELECT * FROM produk");
-                  while($row = mysqli_fetch_assoc($query)){
-                    $image = $row['file'];
+                  while($row = mysqli_fetch_assoc($query)){ // menampilkan index
+                    $image = $row['file']; // menampilkan gambar
                     ?>
                       <tr>
-                        <td><center><?php echo $row['nama_produk']; ?></center></td>
-                        <td><center> <?php echo $row['jenis_produk']; ?> </center></td>
-                        <td><center><?php echo $row['jumlah_produk']; ?></center></td>
-                        <td><center>Rp. <?php echo $row['harga_produk']; ?></center></td>
-                        <td><center><img src="images/<?php echo "$image"; ?>" style="height: 75px; width: 75px"></center></td>
+                        <td><center><?php echo $row['nama_produk']; //menampilkan nama produk ?></center></td>
+                        <td><center> <?php echo $row['jenis_produk']; //menampilkan jenis produk ?> </center></td>
+                        <td><center><?php echo $row['jumlah_produk']; //menampilkan jumlah produk ?></center></td>
+                        <td><center>Rp. <?php echo $row['harga_produk']; //menampilkan harga produk ?></center></td>
+                        <td><center><img src="images/<?php echo "$image"; //menampilkan gambar dengan tinggi 75px dan lebar 75px ?>" style="height: 75px; width: 75px"></center></td>
                         <td><center>
                           <a href="form-edit-produk.php?id_produk=<?php echo "$row[id_produk]"; ?>"><i class="fa fa-edit"></i></a>
                           <a href="hapus-produk.php?id_produk=<?php echo "$row[id_produk]"; ?>" onclick="return confirm ('Yakin Ingin Hapus Data Ini ?')"><i class="fa fa-trash"></i></a>
