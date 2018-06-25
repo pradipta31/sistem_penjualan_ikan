@@ -3,12 +3,7 @@
   if(!isset($_SESSION['login_user'])){
     include('session.php');
   }
-  include 'koneksi.php';
-  $id = $_GET['id_produk'];
-  $query = "SELECT * FROM produk WHERE id_produk='$id'";
-  $hasil = mysqli_query($connection,$query);
-  $row = mysqli_fetch_assoc($hasil);
-  $image = $row['file'];
+
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,48 +44,49 @@
 
   <div class="container-fluid">
     <div class="container">
-      <div class="form-group">
-        <h4>Pesanan : <?php echo $row['nama_produk'];?></h4>
-        <img src="./admin/images/<?=$row['file'];?>" style="height:50px; width: 50px; border-radius: 5px">
-      </div>
-      <form style="margin-top: 50px" action="proses-pembelian.php" method="post">
-        <input type="hidden" name="id_produk" value="<?php echo $row['id_produk']; ?>">
-        
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label><h5>Nama Lengkap</h5></label>
-            <input type="text" class="form-control" placeholder="Masukkan Nama Lengkap" name="nama">
-          </div>
-          <div class="form-group col-md-6">
-            <label><h5>Email</h5></label>
-            <input type="email" class="form-control" placeholder="Masukkan Alamat Email" name="email">
-          </div>
-        </div>
-        <div class="form-group">
-          <label><h5>Alamat</h5></label>
-          <input type="text" class="form-control" placeholder="Masukkan Alamat Anda" name="alamat">
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-4">
-            <label><h5>Jumlah Barang</h5></label>
-            <input type="number" class="form-control" name="jumlah">
-          </div>
-          <div class="form-group col-md-2">
-            <label>Stok Barang : <?php echo $row['jumlah_produk'];?></label>
-          </div>
-          <div class="form-group col-md-4">
-            <label><h5>No Telp</h5></label>
-            <input type="text" class="form-control" name="no_telp">
-          </div>
-        </div>
+      <div class="card text-center" style="margin-top: 50px">
         <?php
+          include 'koneksi.php';
+
+          $query = mysqli_query($connection, "SELECT * FROM produk");
+          $result = mysqli_fetch_assoc($query);
+
+          $tgl_pembelian = date("Y-m-d H:i:s");
+          $nama = $_POST['nama'];
+          $email = $_POST['email'];
+          $alamat = $_POST['alamat'];
+          $jumlah_pembelian = $_POST['jumlah'];
+          $no_telp = $_POST['no_telp'];
+
+          $stok = $result['jumlah_produk'];
+          $perhitungan = $stok - $jumlah_pembelian;
+
           $query1 = mysqli_query($connection, "SELECT * FROM transaksi");
-          $rows = mysqli_fetch_assoc($query1);
+          $data = mysqli_fetch_assoc($query1);
+
+          $query2 = mysqli_query($connection, "INSERT INTO produk (jumlah_produk) VALUES ('$jumlah_pembelian')");
+
+          $kode_transaksi = $data['no_transaksi'];
+          $kode_urut = (int) substr($kode_transaksi, 3,3);
+          $kode_urut++;
+          $char = "PRD";
+          $no_transaksi = $char . sprintf("%03s", $kode_urut);
+
+          $sql = mysqli_query($connection, "INSERT INTO transaksi (no_transaksi,tgl_transaksi) VALUES ('$no_transaksi','$tgl_pembelian')");
+          mysqli_close($connection);
+
         ?>
-        <input type="submit" name="submit" value="Simpan" class="btn btn-primary">
-        <!-- <a href="proses-pembelian.php?id_transaksi=<?php echo "$rows[id_transaksi]"; ?>" class="btn btn-primary">Simpan</a> -->
-        <a href="produk.php" class="btn btn-secondary">Kembali</a>
-      </form>
+        <div class="card-header">
+          Pembelian Berhasil!!
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Pembelian Produk : <?php echo $result['nama_produk']; ?></h5>
+          <p class="card-text">Telah berhasil Klik tombol dibawah untuk melihat-lihat produk kita lagi</p>
+          <a href="produk.php" class="btn btn-primary">KLIK DISINI</a>
+        </div>
+        <div class="card-footer text-muted">
+        </div>
+      </div>
     </div>
   </div>
 

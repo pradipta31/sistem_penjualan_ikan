@@ -73,7 +73,8 @@
                 <img src="../style/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  <?php echo $nama;?>
+                  <?php echo $nama; // untuk menampilkan nama yang login
+                  ?>
                 </p>
               </li>
               <!-- Menu Footer-->

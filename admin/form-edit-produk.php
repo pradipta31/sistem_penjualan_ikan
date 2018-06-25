@@ -1,16 +1,16 @@
 <?php
-  session_start();
+  session_start(); // memulai sesi
   if(!isset($_SESSION['login_admin'])){
     include('session.php');
-  }
-  $nama = ( isset($_SESSION['login_admin']) ) ? $_SESSION['login_admin'] : '';
+  } // cek sesion apakah yang login adalah admin
+  $nama = ( isset($_SESSION['login_admin']) ) ? $_SESSION['login_admin'] : ''; // menampilkan nama yang login berdasarkan session
 
   include 'koneksi.php';
-  $id = $_GET['id_produk'];
+  $id = $_GET['id_produk']; // mengambil id berdasarkan produk yang mana di edit
   $query = "SELECT * FROM produk WHERE id_produk='$id'";
-  $hasil = mysqli_query($connection,$query);
-  $row = mysqli_fetch_assoc($hasil);
-  $image = $row['file'];
+  $hasil = mysqli_query($connection,$query); // fungsi query php mysql
+  $row = mysqli_fetch_assoc($hasil); // menampilkan index
+  $image = $row['file']; // menampilkan images dengan field file
  ?>
 <!DOCTYPE html>
 <html>
@@ -81,7 +81,8 @@
                 <img src="../style/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  <?php echo $nama;?>
+                  <?php echo $nama; // menampilkan nama yang login
+                  ?>
                 </p>
               </li>
               <!-- Menu Footer-->
@@ -162,31 +163,32 @@
     <section class="content">
         <div class="box box-default">
           <div class="box-header with-border">
-            <h3 class="box-title">Nama Produk : <?php echo $row['nama_produk']; ?></h3>
+            <h3 class="box-title">Nama Produk : <?php echo $row['nama_produk']; // menampilkan nama produk ?></h3>
           </div>
 
+            <!-- action ke proses-edit-produk.php dengan method post -->
             <form action="proses-edit-produk.php" method="post" enctype="multipart/form-data">
               <div class="box-body">
-                <input type="hidden" name="id_produk" value="<?php echo $id; ?>">
+                <input type="hidden" name="id_produk" value="<?php echo $id; //menambahkan id_produk dengan type hidden ?>">
                 <div class="form-group">
                   <label>Nama Produk</label>
-                  <input type="text" class="form-control" name="nama_produk" value="<?php echo $row['nama_produk']; ?>">
+                  <input type="text" class="form-control" name="nama_produk" value="<?php echo $row['nama_produk']; //menampilkan nama produk ?>">
                 </div>
                 <div class="form-group">
                   <label>Jenis Produk</label>
-                  <select class="form-control" name="jenis_produk" value="<?php echo $row['jenis_produk']; ?>">
+                  <select class="form-control" name="jenis_produk" value="<?php echo $row['jenis_produk']; //menampilkan jenis jenis produk ?>">
                     <option value="Pil">Pilih Jenis Produk</option>
-                    <option value="ikan" <?= ($row['jenis_produk'] == 'ikan') ? 'selected' : '' ; ?>>Ikan</option>
-                    <option value="makanan" <?= ($row['jenis_produk'] == 'makanan') ? 'selected' : '' ; ?>>Makanan Ikan</option>
+                    <option value="ikan" <?= ($row['jenis_produk'] == 'ikan') ? 'selected' : '' ; //fungsi untuk memilih jenis produk ?>>Ikan</option>
+                    <option value="makanan" <?= ($row['jenis_produk'] == 'makanan') ? 'selected' : '' ; //fungsi untuk memilih jenis produk ?>>Makanan Ikan</option>
                   </select>
                 </div>
                 <div class="form-group">
                   <label>Jumlah Produk</label>
-                  <input type="number" class="form-control" name="jumlah_produk" value="<?php echo $row['jumlah_produk']; ?>">
+                  <input type="number" class="form-control" name="jumlah_produk" value="<?php echo $row['jumlah_produk']; //menampilkan jumlah produk ?>">
                 </div>
                 <div class="form-group">
                   <label>Harga Produk</label>
-                  <input type="number" class="form-control" name="harga_produk" value="<?php echo $row['harga_produk']; ?>">
+                  <input type="number" class="form-control" name="harga_produk" value="<?php echo $row['harga_produk']; //menampilkan harga produk ?>">
                 </div>
                 <div class="form-group">
                   <label>Masukkan Gambar</label>
