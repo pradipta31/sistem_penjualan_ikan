@@ -32,12 +32,28 @@
     <div class="nav-wrapper nav-font">
       <a href="home.php" class="brand-logo" style="margin-left: 20px"><img src="images/logo.png" style="height:90px;"></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 80px">
-        <li class="active"><a href="sass.html" style="text-decoration: none; font-size:20px; color:rgb(52, 52, 52)">Home</a></li>
+        <li class="active"><a href="home.php" style="text-decoration: none; font-size:20px; color:rgb(52, 52, 52)">Home</a></li>
         <li><a href="produk.php" style="text-decoration: none; font-size:20px; color:rgb(52, 52, 52)">Produk</a></li>
         <li><a href="logout.php" style="text-decoration: none;font-size:20px; color:rgb(52, 52, 52)" onclick="return confirm('yakin ingin logout?')">Logout</a></li>
       </ul>
     </div>
   </nav>
+  <div class="container">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="jumbotron" style="margin-top: 20px">
+          <h2 class="display-4">Visi</h2>
+          <p style="font-size: 15px">Tulis Visi disini!</p>
+          <hr class="my-4">
+          <h2 class="display-4">Misi</h2>
+          <p style="font-size: 15px">Tulis Misi disini!</p>
+          <hr class="my-4">
+          <h2 class="display-4">Tujuan</h2>
+          <p style="font-size: 15px">Tulis Tujuan disini!</p>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="footer">
     <p style="font-size:12px;">2018. @TeamLabs.id</p>
   </div>

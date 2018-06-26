@@ -9,6 +9,11 @@
   $hasil = mysqli_query($connection,$query);
   $row = mysqli_fetch_assoc($hasil);
   $image = $row['file'];
+  $stok = $row['jumlah_produk'];
+  if ($stok < 1) {
+    echo "STOK Habis";
+    header('location: produk.php');
+  }
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +44,7 @@
     <div class="nav-wrapper nav-font">
       <a href="home.php" class="brand-logo" style="margin-left: 20px"><img src="images/logo.png" style="height:90px;"></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 80px">
-        <li><a href="sass.html" style="text-decoration: none; font-size:20px; color:rgb(52, 52, 52)">Home</a></li>
+        <li><a href="home.php" style="text-decoration: none; font-size:20px; color:rgb(52, 52, 52)">Home</a></li>
         <li class="active"><a href="produk.php" style="text-decoration: none; font-size:20px; color:rgb(52, 52, 52)">Produk</a></li>
         <li><a href="logout.php" style="text-decoration: none;font-size:20px; color:rgb(52, 52, 52)" onclick="return confirm('yakin ingin logout?')">Logout</a></li>
       </ul>

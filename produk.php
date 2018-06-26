@@ -32,7 +32,7 @@
     <div class="nav-wrapper nav-font">
       <a href="home.php" class="brand-logo" style="margin-left: 20px"><img src="images/logo.png" style="height:90px;"></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 80px">
-        <li><a href="sass.html" style="text-decoration: none; font-size:20px; color:rgb(52, 52, 52)">Home</a></li>
+        <li><a href="home.php" style="text-decoration: none; font-size:20px; color:rgb(52, 52, 52)">Home</a></li>
         <li class="active"><a href="produk.php" style="text-decoration: none; font-size:20px; color:rgb(52, 52, 52)">Produk</a></li>
         <li><a href="logout.php" style="text-decoration: none;font-size:20px; color:rgb(52, 52, 52)" onclick="return confirm('yakin ingin logout?')">Logout</a></li>
       </ul>
@@ -64,6 +64,12 @@
                 <h5 class="card-title"><center><?= $row['nama_produk'];?></center></h5>
                 <h6 class="card-title"><center>Rp. <?= $row['harga_produk'];?></center></h6>
                 <a href="pembelian.php?id_produk=<?php echo "$row[id_produk]"; ?>" class="btn btn-primary" style="margin-left: 100px">Beli</a>
+                <?php
+                  $stok = $row['jumlah_produk'];
+                  if ($stok < 1) {
+                    echo "STOK HABIS";
+                  }
+                 ?>
               </div>
             </div>
 				</div> <!-- col-6 / end -->
