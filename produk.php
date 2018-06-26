@@ -58,10 +58,11 @@
 					?>
 
 					<div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
-            <div class="card" style="height: 300px;">
+            <div class="card" style="height: 350px;">
               <img class="card-img-top" src="./admin/images/<?=$row['file'];?>" alt="Card image cap" height="200px" width="263px">
               <div class="card-body">
                 <h5 class="card-title"><center><?= $row['nama_produk'];?></center></h5>
+                <h6 class="card-title"><center>Rp. <?= $row['harga_produk'];?></center></h6>
                 <a href="pembelian.php?id_produk=<?php echo "$row[id_produk]"; ?>" class="btn btn-primary" style="margin-left: 100px">Beli</a>
               </div>
             </div>

@@ -47,15 +47,15 @@
   </nav>
 
 
-  <div class="container-fluid">
+  <div class="container-fluid" style="width: 100%; height: 100%">
     <div class="container">
       <div class="form-group">
         <h4>Pesanan : <?php echo $row['nama_produk'];?></h4>
         <img src="./admin/images/<?=$row['file'];?>" style="height:50px; width: 50px; border-radius: 5px">
       </div>
       <form style="margin-top: 50px" action="proses-pembelian.php" method="post">
-        <input type="hidden" name="id_produk" value="<?php echo $row['id_produk']; ?>">
-        
+        <input type="hidden" name="id_produk">
+
         <div class="form-row">
           <div class="form-group col-md-6">
             <label><h5>Nama Lengkap</h5></label>
@@ -87,9 +87,10 @@
           $query1 = mysqli_query($connection, "SELECT * FROM transaksi");
           $rows = mysqli_fetch_assoc($query1);
         ?>
-        <input type="submit" name="submit" value="Simpan" class="btn btn-primary">
+        <input type="submit" name="submit" value="Simpan" id="'.$row['id_produk'].'" class="btn btn-primary">
         <!-- <a href="proses-pembelian.php?id_transaksi=<?php echo "$rows[id_transaksi]"; ?>" class="btn btn-primary">Simpan</a> -->
         <a href="produk.php" class="btn btn-secondary">Kembali</a>
+        <input type="text" name="nama_produk" value="<?php echo $row['nama_produk'];?>" readonly>
       </form>
     </div>
   </div>

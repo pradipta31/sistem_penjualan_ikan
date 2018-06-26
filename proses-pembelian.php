@@ -46,41 +46,52 @@
     <div class="container">
       <div class="card text-center" style="margin-top: 50px">
         <?php
-          include 'koneksi.php';
+          if (isset($_POST['submit'])) {
+            include 'koneksi.php';
 
-          $query = mysqli_query($connection, "SELECT * FROM produk");
-          $result = mysqli_fetch_assoc($query);
+            $nama_produk = $_POST['nama_produk'];
 
-          $tgl_pembelian = date("Y-m-d H:i:s");
-          $nama = $_POST['nama'];
-          $email = $_POST['email'];
-          $alamat = $_POST['alamat'];
-          $jumlah_pembelian = $_POST['jumlah'];
-          $no_telp = $_POST['no_telp'];
+            $query = mysqli_query($connection, "SELECT * FROM produk WHERE nama_produk = '$nama_produk'");
+            $result = mysqli_fetch_assoc($query);
+            $row = mysqli_num_rows($query);
 
-          $stok = $result['jumlah_produk'];
-          $perhitungan = $stok - $jumlah_pembelian;
+            $produk = $result['nama_produk'];
 
-          $query1 = mysqli_query($connection, "SELECT * FROM transaksi");
-          $data = mysqli_fetch_assoc($query1);
+            $tgl_pembelian = date("Y-m-d H:i:s");
 
-          $query2 = mysqli_query($connection, "INSERT INTO produk (jumlah_produk) VALUES ('$jumlah_pembelian')");
+            $nama = $_POST['nama'];
+            $email = $_POST['email'];
+            $alamat = $_POST['alamat'];
+            $jumlah_pembelian = $_POST['jumlah'];
+            $no_telp = $_POST['no_telp'];
 
-          $kode_transaksi = $data['no_transaksi'];
-          $kode_urut = (int) substr($kode_transaksi, 3,3);
-          $kode_urut++;
-          $char = "PRD";
-          $no_transaksi = $char . sprintf("%03s", $kode_urut);
+            $stok = $result['jumlah_produk'];
+            $perhitungan = $stok - $jumlah_pembelian;
+            $harga = $result['harga_produk'];
+            $pembayaran = ($harga * $jumlah_pembelian);
 
-          $sql = mysqli_query($connection, "INSERT INTO transaksi (no_transaksi,tgl_transaksi) VALUES ('$no_transaksi','$tgl_pembelian')");
-          mysqli_close($connection);
+            $query2 = mysqli_query($connection, "UPDATE produk SET jumlah_produk='$perhitungan' WHERE nama_produk='$nama_produk'");
+
+            $query1 = mysqli_query($connection, "SELECT * FROM transaksi");
+            $data = mysqli_fetch_assoc($query1);
+
+            $kode_transaksi = $data['no_transaksi'];
+            $kode_urut = (int) substr($kode_transaksi, 3,3);
+            $kode_urut++;
+            $char = "PRD";
+            $no_transaksi = $char . sprintf("%03s", $kode_urut);
+
+            $sql = mysqli_query($connection, "INSERT INTO transaksi (no_transaksi,tgl_transaksi) VALUES ('$no_transaksi','$tgl_pembelian')");
+            mysqli_close($connection);
+          }
 
         ?>
         <div class="card-header">
           Pembelian Berhasil!!
         </div>
         <div class="card-body">
-          <h5 class="card-title">Pembelian Produk : <?php echo $result['nama_produk']; ?></h5>
+          <h5 class="card-title">Pembelian Produk : <?php echo $produk; ?></h5>
+          <p class="card-text">Pembayaran sejumlah : <?php echo $pembayaran;?></p>
           <p class="card-text">Telah berhasil Klik tombol dibawah untuk melihat-lihat produk kita lagi</p>
           <a href="produk.php" class="btn btn-primary">KLIK DISINI</a>
         </div>
