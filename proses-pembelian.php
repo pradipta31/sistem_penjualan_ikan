@@ -91,7 +91,7 @@
         </div>
         <div class="card-body">
           <h5 class="card-title">Pembelian Produk : <?php echo $produk; ?></h5>
-          <p class="card-text">Pembayaran sejumlah : <?php echo $pembayaran;?></p>
+          <p class="card-text">Pembayaran sejumlah : Rp. <?php echo $pembayaran;?></p>
           <p class="card-text">Telah berhasil Klik tombol dibawah untuk melihat-lihat produk kita lagi</p>
           <a href="produk.php" class="btn btn-primary">KLIK DISINI</a>
         </div>

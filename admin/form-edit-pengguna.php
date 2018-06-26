@@ -1,16 +1,22 @@
 <?php
-  session_start();
+  session_start(); // memulai sesi
   if(!isset($_SESSION['login_admin'])){
     include('session.php');
-  }
-  $nama = ( isset($_SESSION['login_admin']) ) ? $_SESSION['login_admin'] : '';
+  } // cek sesion apakah yang login adalah admin
+  $nama = ( isset($_SESSION['login_admin']) ) ? $_SESSION['login_admin'] : ''; // menampilkan nama yang login berdasarkan session
+
+  include 'koneksi.php';
+  $id = $_GET['id_anggota']; // mengambil id berdasarkan produk yang mana di edit
+  $query = "SELECT * FROM anggota WHERE id_anggota='$id'";
+  $hasil = mysqli_query($connection,$query); // fungsi query php mysql
+  $row = mysqli_fetch_assoc($hasil); // menampilkan index
  ?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sistem Penjualan Ikan | Produk</title>
+  <title>Tambah Produk</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -74,7 +80,8 @@
                 <img src="../style/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  <?php echo $nama;?>
+                  <?php echo $nama; // menampilkan nama yang login
+                  ?>
                 </p>
               </li>
               <!-- Menu Footer-->
@@ -93,6 +100,8 @@
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
+
+  <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -100,7 +109,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li>
+        <li class="active treeview">
           <a href="dashboard.php">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             <span class="pull-right-container">
@@ -140,110 +149,67 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Produk
-        <small>Manage Your Product</small>
+        Dashboard
+        <small>Tambah Produk lainnya</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="dashboard.php"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Data Produk</li>
+        <li class="active">Tambah Produk</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th><center>Nama</center></th>
-                  <th><center>Alamat</center></th>
-                  <th><center>No HP</center></th>
-                  <th><center>Email</center></th>
-                  <th><center>Opsi</center></th>
-                </tr>
-                </thead>
-                <?php
-                  $koneksi = mysqli_connect('localhost','root','','sistem_perikanan');
-                  $query = mysqli_query($koneksi, "SELECT * FROM anggota"); // execute query
-                  while ($row = mysqli_fetch_assoc($query)) { // menampilkan index $row
-
-                ?>
-                <tbody>
-
-                      <tr>
-
-                        <td><center><?php echo $row['nama']; // menampilkan nama ?></center></td>
-                        <td><center> <?php echo $row['alamat']; // menampilkan alamat ?> </center></td>
-                        <td><center><?php echo $row['no_hp']; // menampilkan no_hp ?></center></td>
-                        <td><center><?php echo $row['email']; // menampilkan email ?></center></td>
-                        <td><center>
-                          <a href="form-edit-pengguna.php?id_anggota=<?php echo "$row[id_anggota]"; ?>"><i class="fa fa-edit"></i></a>
-                          <a href="hapus-pengguna.php?id_anggota=<?php echo "$row[id_anggota]"; ?>" onclick="return confirm ('Yakin Ingin Hapus Data Ini ?')"><i class="fa fa-trash"></i></a>
-                        </center></td>
-
-                      </tr>
-                </tfoot>
-                <?php
-                }
-                 ?>
-              </table>
-            </div>
-            <!-- /.box-body -->
+        <div class="box box-default">
+          <div class="box-header with-border">
+            <h3 class="box-title">Nama Pengguna : <?php echo $row['nama']; // menampilkan nama produk ?></h3>
           </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-      </div>
+
+            <!-- action ke proses-edit-produk.php dengan method post -->
+            <form action="proses-edit-pengguna.php" method="post" enctype="multipart/form-data">
+              <div class="box-body">
+                <input type="hidden" name="id_anggota" value="<?php echo $id; //menambahkan id_produk dengan type hidden ?>">
+                <div class="form-group">
+                  <label>Nama</label>
+                  <input type="text" class="form-control" name="nama" value="<?php echo $row['nama']; //menampilkan nama produk ?>">
+                </div>
+                <div class="form-group">
+                  <label>Alamat</label>
+                  <input type="text" class="form-control" name="alamat" value="<?php echo $row['alamat']; //menampilkan nama produk ?>">
+                </div>
+                <div class="form-group">
+                  <label>No Telp</label>
+                  <input type="number" class="form-control" name="no_hp" value="<?php echo $row['no_hp']; //menampilkan harga produk ?>">
+                </div>
+                <div class="form-group">
+                  <label>Alama Email</label>
+                  <input type="email" class="form-control" name="email" value="<?php echo $row['email']; //menampilkan harga produk ?>">
+                </div>
+                <button type="button" class="btn btn-default" name="button" onclick="window.location='pengguna.php'">Kembali</button>
+                <input type="submit" value="Simpan" class="btn btn-primary"  onclick="return confirm ('Yakin simpan perubahan ?')">
+              </div>
+            </form>
+
+          </div>
       <!-- /.row -->
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <strong>Copyright &copy; 2018 <a href="#">PT. Ikan Jaya Makmur Abadi</a>.</strong> All rights
     reserved.
   </footer>
-
-  <!-- Control Sidebar -->
-
 </div>
-<!-- ./wrapper -->
-
-<!-- jQuery 3 -->
 <script src="../style/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
 <script src="../style/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- DataTables -->
 <script src="../style/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../style/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<!-- SlimScroll -->
 <script src="../style/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
 <script src="../style/bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
 <script src="../style/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
 <script src="../style/dist/js/demo.js"></script>
-<!-- page script -->
-<script>
-  $(function () {
-    $('#example1').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    })
-  })
-</script>
 </body>
 </html>
